@@ -112,11 +112,12 @@ function handleResultsFilter() {
 
 // filter results and add event listeners to generated list items
 function filterResults() {
-	const wordToMatch = new RegExp(filterBox.value, 'ig');
+	let pattern = filterBox.value.replace(/\(/, "\\(");
+	pattern = pattern.replace(/\)/, "\\)");
+	const wordToMatch = new RegExp(pattern, 'ig');
 	const filteredResults = searchResults.filter(item => {
 		return item.title.match(wordToMatch);
 	});
-
 	const listItems = generateListItems(filteredResults);
 
 	suggestions.innerHTML = listItems;
@@ -267,7 +268,6 @@ function handleNavSearchClick() {
 }
 
 function renderSavedArticles(savedArticles, data = true) {
-	console.log(savedArticles);
 	let articlesToRender;
 	articlesToRender += '<h1 class="savedArticlesHeader>Your saved articles</h1>"'
 	if (data) {
